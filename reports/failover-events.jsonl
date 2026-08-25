@@ -1,0 +1,20 @@
+{"ts": 1787649877.535779, "iso": "2026-08-25T09:24:37", "step": "1_verify_target", "target": "b", "state_before": {"region": "b", "pool_state": "warm", "weights": false, "count": 0, "latest_doc_ts": null, "ts": 1787649877.534793}}
+{"ts": 1787649877.539434, "iso": "2026-08-25T09:24:37", "step": "2_restore_snapshot", "target": "b", "backend": "fs", "embed_model_version": "embed-model=vi-e5-base@v3", "rpo_seconds": 8.02, "docs_lost": 4}
+{"ts": 1787649877.539677, "iso": "2026-08-25T09:24:37", "step": "3_scale_pool", "target": "b", "pool_state": "full"}
+{"ts": 1787649883.855847, "iso": "2026-08-25T09:24:43", "step": "4_wait_ready", "target": "b", "ready": true, "waited_s": 6.32}
+{"ts": 1787649883.8577652, "iso": "2026-08-25T09:24:43", "step": "5_dns_cutover", "target": "b"}
+{"ts": 1787650050.4853928, "iso": "2026-08-25T09:27:30", "step": "1_verify_target", "target": "b", "state_before": {"region": "b", "pool_state": "warm"}}
+{"ts": 1787650050.487017, "iso": "2026-08-25T09:27:30", "step": "2_restore_snapshot", "target": "b", "backend": "fs", "embed_model_version": "test", "rpo_seconds": 120.24, "docs_lost": 60}
+{"ts": 1787650050.487272, "iso": "2026-08-25T09:27:30", "step": "3_scale_pool", "target": "b", "pool_state": "full"}
+{"ts": 1787650051.4929762, "iso": "2026-08-25T09:27:31", "step": "4_wait_ready", "target": "b", "ready": false, "waited_s": 1.01}
+{"ts": 1787650051.494217, "iso": "2026-08-25T09:27:31", "step": "abort", "target": "b", "reason": "target khong ready trong wait timeout"}
+{"ts": 1787650082.377642, "iso": "2026-08-25T09:28:02", "step": "1_verify_target", "target": "b", "state_before": {"region": "b", "pool_state": "warm"}}
+{"ts": 1787650082.380227, "iso": "2026-08-25T09:28:02", "step": "2_restore_snapshot", "target": "b", "backend": "fs", "embed_model_version": "test", "rpo_seconds": 120.24, "docs_lost": 60}
+{"ts": 1787650082.380639, "iso": "2026-08-25T09:28:02", "step": "3_scale_pool", "target": "b", "pool_state": "full"}
+{"ts": 1787650083.38573, "iso": "2026-08-25T09:28:03", "step": "4_wait_ready", "target": "b", "ready": false, "waited_s": 1.0}
+{"ts": 1787650083.386255, "iso": "2026-08-25T09:28:03", "step": "abort", "target": "b", "reason": "target khong ready trong wait timeout"}
+{"ts": 1787650100.150522, "iso": "2026-08-25T09:28:20", "step": "1_verify_target", "target": "b", "state_before": {"region": "b", "pool_state": "warm"}}
+{"ts": 1787650100.153513, "iso": "2026-08-25T09:28:20", "step": "2_restore_snapshot", "target": "b", "backend": "fs", "embed_model_version": "test", "rpo_seconds": 120.24, "docs_lost": 60}
+{"ts": 1787650100.1540961, "iso": "2026-08-25T09:28:20", "step": "3_scale_pool", "target": "b", "pool_state": "full"}
+{"ts": 1787650101.1618402, "iso": "2026-08-25T09:28:21", "step": "4_wait_ready", "target": "b", "ready": false, "waited_s": 1.01}
+{"ts": 1787650101.162088, "iso": "2026-08-25T09:28:21", "step": "abort", "target": "b", "reason": "target khong ready trong wait timeout"}

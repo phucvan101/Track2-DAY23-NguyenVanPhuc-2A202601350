@@ -29,13 +29,47 @@ URL = {"a": "http://127.0.0.1:8001", "b": "http://127.0.0.1:8002"}
 
 
 def probe(region: str, timeout: float) -> tuple[bool, str]:
-    """TODO: trả về (ready, reason). Timeout PHẢI có — netblock làm request treo mãi."""
-    raise NotImplementedError
+    """Trả về (ready, reason). Timeout PHẢI có — netblock làm request treo mãi."""
+    try:
+        r = httpx.get(f"{URL[region]}/readyz", timeout=timeout)
+    except Exception as e:
+        return False, type(e).__name__
+    if r.status_code == 200:
+        return True, "ready"
+    try:
+        reasons = r.json().get("reasons")
+    except Exception:
+        reasons = None
+    return False, (",".join(reasons) if reasons else f"status={r.status_code}")
 
 
 def run(interval: float, timeout: float, threshold: int, duration: float, out: pathlib.Path):
-    """TODO: vòng lặp poll + phát hiện transition + ghi JSONL."""
-    raise NotImplementedError
+    """Vòng lặp poll + phát hiện transition + ghi JSONL."""
+    out.parent.mkdir(parents=True, exist_ok=True)
+    state = {r: "HEALTHY" for r in URL}
+    consecutive = {r: 0 for r in URL}
+    end = time.time() + duration
+    with out.open("a") as f:
+        while time.time() < end:
+            for region in URL:
+                ready, reason = probe(region, timeout)
+                matches_current = (ready and state[region] == "HEALTHY") or (
+                    not ready and state[region] == "UNHEALTHY")
+                if matches_current:
+                    consecutive[region] = 0
+                    continue
+                consecutive[region] += 1
+                if consecutive[region] >= threshold:
+                    new_state = "HEALTHY" if ready else "UNHEALTHY"
+                    rec = {"ts": time.time(), "event": "state_change", "region": region,
+                           "to": new_state, "reason": reason, "interval_s": interval,
+                           "threshold": threshold, "consecutive_fails": consecutive[region]}
+                    f.write(json.dumps(rec) + "\n")
+                    f.flush()
+                    print("HEALTH", json.dumps(rec))
+                    state[region] = new_state
+                    consecutive[region] = 0
+            time.sleep(interval)
 
 
 if __name__ == "__main__":
